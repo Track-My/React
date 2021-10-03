@@ -1,0 +1,37 @@
+.marker-block {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	background-color: thistle;
+	transform: translate(-50%, -50%);
+}
+
+.marker,
+.marker-selected {
+	width: 15px;
+	height: 15px;
+	border-radius: 50%;
+	background-color: #6e2121;
+	box-shadow: 0 0 3px black;
+	border: 1px solid #fff;
+	cursor: pointer;
+}
+
+.marker:hover {
+	background-color: #9b3939;
+}
+
+.marker-selected {
+	background-color: #eb4e4e;
+}
+
+.marker-label {
+	position: absolute;
+	background-color: #fff;
+	padding: 2px 5px;
+	border-radius: 5px;
+	box-shadow: 0 0 3px black;
+	font-size: 13px;
+	margin-top: 25px;
+	cursor: pointer;
+}

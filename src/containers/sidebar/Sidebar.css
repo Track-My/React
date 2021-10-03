@@ -1,0 +1,101 @@
+#sidebar {
+	width: 350px;
+	min-width: 350px;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+}
+
+#toolbar {
+	background-color: #FFF;
+	padding: 15px;
+}
+
+#device-info {
+	margin-top: 25px;
+}
+
+#device-info-controls {
+	display: flex;
+	margin-top: 15px;
+	justify-content: space-between;
+}
+
+#device-info > b {
+	padding: 5px;
+	margin: 5px 0;
+	display: block;
+}
+
+.device-info-input {
+	width: 100%;
+	font-size: 16px;
+	box-sizing: border-box;
+	border: none;
+	background-color: #EEE;
+	padding: 5px;
+	margin: 5px 0;
+	letter-spacing: 0.5px;
+}
+
+.device-info-button {
+	color: #777;
+	cursor: pointer;
+}
+
+.device-info-button:hover {
+	color: #555;
+}
+
+.device-info-button:active {
+	color: #333;
+}
+
+.block-coords-head {
+	padding: 15px;
+	border-top: 1px solid #DDD;
+	border-bottom: 1px solid #DDD;
+	box-shadow: 0 0 5px #DDD;
+}
+
+.block-coords,
+.block-coords-head {
+	display: flex;
+}
+
+.block-coords > div,
+.block-coords-head > div {
+	flex: 1;
+}
+
+#locations-list {
+	overflow-y: auto;
+	flex-grow: 1;
+}
+
+.location-item,
+.location-item-selected {
+	padding: 10px 15px;
+	cursor: pointer;
+	border-bottom: 1px solid #DDD;
+}
+
+.location-item-selected {
+	background-color: #CCC;
+}
+
+.location-item:hover {
+	background-color: #EEE;
+}
+
+.location-item-selected:hover {
+	background-color: #BBB;
+}
+
+@media all and (max-width: 920px) {
+	#sidebar {
+		width: 100%;
+		min-width: 0px;
+		height: 350px;
+	}
+}

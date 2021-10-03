@@ -1,0 +1,35 @@
+#deviceList {
+    height: 100%;
+    padding: 15px;
+    overflow-y: auto;
+}
+
+#deviceList > h2 {
+    font-size: 20px;
+}
+
+.deviceItem {
+    margin: 15px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    border-radius: 10px;
+    border: 1px solid #DDD;
+    cursor: pointer;
+    padding: 10px;
+    font-size: 15px;
+}
+
+.deviceItem:hover {
+    background-color: #EEE;
+}
+
+.deviceItem:active {
+    background-color: #DDD;
+}
+
+.deviceItem > div {
+    margin: 10px 0;
+    text-align: center;
+}
