@@ -27,9 +27,10 @@ function App() {
 		let interval: NodeJS.Timeout;
 		if (deviceId) {
 			dispatch(fetchLocations({ deviceId, date }));
+			let time = new Date();
 			interval = setInterval(() => {
-				const time = new Date();
 				dispatch(fetchLocationsFromTime({ deviceId, date: time.toISOString() }))
+				time = new Date();
 			}, 60_000)
 		}
 		return () => {
