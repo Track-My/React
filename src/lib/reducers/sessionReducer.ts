@@ -11,7 +11,6 @@ export interface SessionError {
 export interface Session {
     user: User | null;
     device: Device | null;
-    token: string | null;
     errors: SessionError[];
 }
 
@@ -23,7 +22,6 @@ const initialState: Session = data ? {
 } : {
     user: null,
     device: null,
-    token: null,
     errors: []
 };
 
@@ -73,7 +71,6 @@ export const sessionSlice = createSlice({
         logout: (state)  => {
             state.user = null;
             state.device = null;
-            state.token = null;
         },
         addError: (state, action: PayloadAction<SessionError>) => {
             state.errors.push(action.payload);
@@ -83,13 +80,12 @@ export const sessionSlice = createSlice({
             if (index >= 0) {
                 state.errors.splice(index, 1);
             }
-        }
+        },
     },
     extraReducers: (builder) => {
         builder.addCase(authenticate.fulfilled, (state, action: PayloadAction<AuthenticationResponse>) => {
             state.user = action.payload.user;
             state.device = action.payload.device;
-            state.token = action.payload.token;
         })
     }
 });

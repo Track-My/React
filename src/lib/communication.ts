@@ -1,13 +1,38 @@
-import { Session } from './reducers/sessionReducer';
+import { HOST } from '../config';
+import usersService from '../services/users.service';
 import { FetchResponse } from './types';
 
-export function handleResponse<T extends FetchResponse>(response: Response) {
-	return response.text().then(text => {
+export function handleResponse<T extends FetchResponse>(response: Response, options: RequestInit, retry: boolean = false): Promise<T> {
+	return response.text().then(async (text) => {
 		const data = JSON.parse(text) as T;
 		if (!response.ok) {
 			if ([401, 403].indexOf(response.status) !== -1) {
+				const data = localStorage.getItem('data');
+				if (data && response.url !== `${HOST}users/refresh` && !retry) {
+					const parsedData = (JSON.parse(data));
+					const refreshToken = parsedData.refreshToken;
+					if (refreshToken) {
+						try {
+							const refresh = await usersService.refresh({ refreshToken });
+							const newData = { 
+								user: parsedData.user, 
+								device: parsedData.device,
+								...refresh 
+							};
+							localStorage.setItem('data', JSON.stringify(newData));
+							(options.headers as Headers).set('Authorization', `Bearer ${refresh.token}`);
+							return await fetch(response.url, options)
+								.then(res => handleResponse<T>(res, options, true))
+						} catch (e) {
+							localStorage.clear();
+							window.location.reload();
+							throw e;
+						}
+					}
+				}
+
 				localStorage.clear();
-				// window.location.reload();
+				window.location.reload();
 			}
 
 			const error = (data && data && data.message) || response.statusText;
@@ -21,14 +46,14 @@ export function handleResponse<T extends FetchResponse>(response: Response) {
 export function api<T>(url: string, options: RequestInit): Promise<T> {
 	const data = localStorage.getItem('data');
 	const headers = new Headers();
-	headers.append('Content-Type', 'application/json');
+	headers.set('Content-Type', 'application/json');
 	if (data) {
-		const token = (JSON.parse(data) as Session).token;
-		headers.append('Authorization', `Bearer ${token}`);
+		const token = (JSON.parse(data)).token;
+		headers.set('Authorization', `Bearer ${token}`);
 	}
 	options.headers = headers;
 	return fetch(url, options)
-		.then(res => handleResponse<T>(res))
+		.then(res => handleResponse<T>(res, options))
 }
 
 export function get<T>(url: string): Promise<T> {

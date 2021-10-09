@@ -48,10 +48,20 @@ export interface FetchLocationRequest {
     date: string;
 }
 
+export interface RefreshRequest {
+	refreshToken: string;
+}
+
 export interface AuthenticationResponse extends FetchResponse {
 	user: User;
     device: Device;
     token: string;
+    refreshToken: string;
+}
+
+export interface RefreshResponse extends FetchResponse {
+    token: string;
+    refreshToken: string;
 }
 
 export interface LocationsResponce extends FetchResponse {
